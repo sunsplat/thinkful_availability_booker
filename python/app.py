@@ -28,8 +28,7 @@ def getAllAppointments():
                 if date not in advisor_availability_by_ids[advisor_id]:
                     advisor_availability_by_ids[advisor_id].append(date)
         return advisor_availability_by_ids
-    else:
-        return False
+    return {}
 
 
 @app.route("/getAvailability", methods=["GET"])
@@ -40,12 +39,12 @@ def getAvailability():
             for booking in BOOKED_APPOINTMENTS[str(advisor_id)]:
                 if booking['time'] in advisor_availability_by_ids[advisor_id]:
                     advisor_availability_by_ids[advisor_id].remove(booking['time'])
-    return json.dumps(advisor_availability_by_ids)
+    return jsonify(advisor_availability_by_ids)
 
 
 @app.route("/getBookings", methods=["GET"])
 def getBookings():
-    return json.dumps(BOOKED_APPOINTMENTS)
+    return jsonify(BOOKED_APPOINTMENTS)
 
 
 @app.route("/saveAppointment", methods=["POST"])
