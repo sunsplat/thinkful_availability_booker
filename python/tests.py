@@ -3,14 +3,8 @@ from datetime import date
 import json, app as main_app
 from app import app
 
+
 class TestApp(TestCase):
-
-
-    def test_today(self):
-        with app.test_client() as cli:
-            resp = cli.get('/today')
-            assert resp.status_code == 200
-            assert resp.json == {"today": "{}".format(date.today())}
 
 
     @mock.patch('app.getAllAppointments')
@@ -55,4 +49,12 @@ class TestApp(TestCase):
             resp = cli.post('/saveAppointment')
             self.assertEqual(main_app.BOOKED_APPOINTMENTS, {'372955': [{'student': 'test', 'time': '2019-08-27T11:00:00-04:00'}]})
     
+
+    def test_today(self):
+        with app.test_client() as cli:
+            resp = cli.get('/today')
+            assert resp.status_code == 200
+            assert resp.json == {"today": "{}".format(date.today())}
+
+
 

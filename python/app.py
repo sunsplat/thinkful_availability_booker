@@ -12,11 +12,6 @@ BOOKED_APPOINTMENTS = {}
 OPEN_APPOINTMENTS = {}
 
 
-@app.route("/today", methods=["GET"])
-def today():
-    return jsonify({"today": date.today().isoformat()})
-
-
 def getAllAppointments():
     response = requests.get("https://www.thinkful.com/api/advisors/availability")
     advisor_availability_by_ids = {}
@@ -57,3 +52,8 @@ def postAppointment():
         BOOKED_APPOINTMENTS[advisor_id] = []
     BOOKED_APPOINTMENTS[advisor_id].append({'student': student_name, 'time': time_slot})
     return 'ok'
+
+
+@app.route("/today", methods=["GET"])
+def today():
+    return jsonify({"today": date.today().isoformat()})
